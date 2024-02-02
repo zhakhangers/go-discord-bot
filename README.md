@@ -14,7 +14,7 @@ This command will provide you with a list of available weather-related commands 
 
 For text translation, use the following command:
 
-!translate help
+`!translate help`
 
 This command will display available translation commands and instructions. You can translate text to various languages by specifying the target language code.
 
