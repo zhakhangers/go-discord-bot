@@ -24,6 +24,10 @@ This command will provide you with a list of available weather-related commands 
 !weather get [location] - gets the weather for a specific location
 ```
 
+Example Screenshot:
+<img width="449" alt="Screenshot 2024-02-02 at 19 39 38" src="https://github.com/zhakhangers/go-discord-bot/assets/73777397/e0dc02ec-6be5-4cf8-b5d8-86727ed105c6">
+
+
 ## Text Translation
 
 For text translation, use the following command:
