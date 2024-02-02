@@ -83,7 +83,7 @@ func NewBotHandler(s *discordgo.Session, m *discordgo.MessageCreate) {
 	// Define routes and create a router instance.
 	routes := map[*Route]interface{}{
 		&Route{"weather", "`!weather help` - Weather info from Open Weather Maps "}: client.Weather,
-		&Route{"translate", "`!translate help` - translate "}:                       client.Translate,
+		&Route{"translate", "`!translate help` - Translated text using Google Translate "}:                       client.Translate,
 	}
 
 	router := &Router{routes: routes}
@@ -101,7 +101,7 @@ func (client *Client) Weather() {
 
 	// Define weather-related routes and create a router instance.
 	routes := map[*Route]interface{}{
-		&Route{"get", "`!weather get [location]` - gets the weather for a location"}: client.GetWeather,
+		&Route{"get", "`!weather get [location]` - gets the weather for a specific location"}: client.GetWeather,
 	}
 
 	weatherRouter := &Router{routes: routes}
@@ -172,7 +172,7 @@ func (client *Client) Translate() {
 
 	// Defines translation-related routes and create a router instance.
 	routes := map[*Route]interface{}{
-		&Route{"to", "`!translate to [2-letters language code] [content]` - translates the text after to the give language"}: client.ToTranslate,
+		&Route{"to", "`!translate to [2-letters language code] [content]` - translates the text after to to the given language"}: client.ToTranslate,
 	}
 
 	translateRouter := &Router{routes: routes}
