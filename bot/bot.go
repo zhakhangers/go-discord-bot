@@ -38,6 +38,7 @@ func Run() {
 
 	// Runs the bot until it is terminated.
 	fmt.Println("Bot running...")
+
 	sc := make(chan os.Signal, 1)
 	signal.Notify(sc, os.Interrupt)
 	<-sc
