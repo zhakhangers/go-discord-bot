@@ -41,6 +41,9 @@ This command will display available translation commands and instructions. You c
 ```bash
 !translate to [2-letters language code] [content] - translates the text after "to" to the given language
 ```
+Example Screenshot:
+<img width="433" alt="Screenshot 2024-02-02 at 19 40 57" src="https://github.com/zhakhangers/go-discord-bot/assets/73777397/ff6dcd8d-1398-4426-b4b5-db3e89bdf9be">
+
 
 ## Getting Started
 
