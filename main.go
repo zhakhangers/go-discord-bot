@@ -16,9 +16,14 @@ func main() {
 	if !ok {
 		log.Fatal("Must set Open Weather token as env variable: OPENWEATHER_TOKEN")
 	}
+	googleTranslateToken, ok := os.LookupEnv(("GOOGLETRANSLATE_TOKEN"))
+	if !ok {
+		log.Fatal("Must set Open Weather token as env variable: GOOGLETRANSLATE_TOKEN")
+	}
 
 	// Save API keys & start bot
 	bot.BotToken = botToken
 	bot.OpenWeatherToken = openWeatherToken
+	bot.GoogleTranslateToken = googleTranslateToken
 	bot.Run()
 }

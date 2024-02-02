@@ -9,32 +9,34 @@ import (
 	"github.com/bwmarrin/discordgo"
 )
 
-// Store Bot API Tokens:
+// Storing Bot API Tokens:
 var (
-	OpenWeatherToken string
-	BotToken         string
+	OpenWeatherToken     string
+	BotToken             string
+	GoogleTranslateToken string
 )
 
+// Run() initializes and starts the bot.
 func Run() {
-	// Create new Discord Session
+	// Create a new Discord session.
 	discord, err := discordgo.New("Bot " + BotToken)
 	if err != nil {
 		log.Fatalf("error creating Discord session: %v", err)
 	}
 
-	// Open a websocket connection to Discord and begin listening.
+	// Opens a websocket connection to Discord and begin listening.
 	err = discord.Open()
 	if err != nil {
 		log.Fatalf("error opening connection: %v", err)
 	}
 
-	// Cleanly close down the Discord session.
+	// Cleanly closes down the Discord session when finished.
 	defer discord.Close()
 
-	// Add event handler for general messages
+	// Adds an event handler for general messages.
 	discord.AddHandler(NewBotHandler)
 
-	// Run until code is terminated
+	// Runs the bot until it is terminated.
 	fmt.Println("Bot running...")
 	sc := make(chan os.Signal, 1)
 	signal.Notify(sc, os.Interrupt)
