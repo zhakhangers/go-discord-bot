@@ -83,13 +83,14 @@ func NewBotHandler(s *discordgo.Session, m *discordgo.MessageCreate) {
 	// Define routes and create a router instance.
 	routes := map[*Route]interface{}{
 		&Route{"weather", "`!weather help` - Weather info from Open Weather Maps "}: client.Weather,
-		&Route{"translate", "`!translate help` - Translated text using Google Translate "}:                       client.Translate,
+		&Route{"translate", "`!translate help` - translate "}:                       client.Translate,
 	}
 
 	router := &Router{routes: routes}
 
 	// Handle the incoming command using the router.
 	router.handleRoute(&client)
+
 }
 
 func (client *Client) Weather() {
@@ -101,7 +102,7 @@ func (client *Client) Weather() {
 
 	// Define weather-related routes and create a router instance.
 	routes := map[*Route]interface{}{
-		&Route{"get", "`!weather get [location]` - gets the weather for a specific location"}: client.GetWeather,
+		&Route{"get", "`!weather get [location]` - gets the weather for a location"}: client.GetWeather,
 	}
 
 	weatherRouter := &Router{routes: routes}
@@ -128,6 +129,18 @@ func (client *Client) processWeatherRequest(cmd string) {
 	res, err := weatherClient.GetWeatherByLocation(cmd)
 	if err != nil {
 		log.Printf("error getting weather: %s | %v", cmd, err)
+		embeddedMsg := &discordgo.MessageEmbed{Author: &discordgo.MessageEmbedAuthor{},
+			Title:       "There is no such location",
+			Timestamp:   time.Now().Format(time.RFC3339),
+			Color:       0x0000ff,
+			Description: "`!weather get [location]`",
+		}
+
+		// In case there is no location, provide message about it
+		if msg, err := client.session.ChannelMessageSendEmbed(client.message.ChannelID, embeddedMsg); err != nil {
+			log.Printf("error sending message | %v | %v", msg, err)
+		}
+
 		return
 	}
 
@@ -172,7 +185,7 @@ func (client *Client) Translate() {
 
 	// Defines translation-related routes and create a router instance.
 	routes := map[*Route]interface{}{
-		&Route{"to", "`!translate to [2-letters language code] [content]` - translates the text after to to the given language"}: client.ToTranslate,
+		&Route{"to", "`!translate to [2-letters language code] [content]` - translates the text after to the give language"}: client.ToTranslate,
 	}
 
 	translateRouter := &Router{routes: routes}
@@ -219,13 +232,26 @@ func (client *Client) handleReaction(cmd string) {
 	// Extracts target language from message content
 	targetLanguageCode, ok := getLanguageCodeFromMessage(cmd)
 	if !ok {
-		return // Language code not provided or not recognized
+		// Language code not provided or not recognized
+		return
 	}
 
 	// Checks if the language code is valid
 	target, ok := languages[targetLanguageCode]
 	if !ok {
-		return // Not a valid language code
+		// Not a valid language code
+		embeddedMsg := &discordgo.MessageEmbed{Author: &discordgo.MessageEmbedAuthor{},
+			Title:       "Not a valid language code",
+			Timestamp:   time.Now().Format(time.RFC3339),
+			Color:       0x0000ff,
+			Description: "`!translate to [2-letters language code] [content]`",
+		}
+
+		// In case there is no location, provide message about it
+		if msg, err := client.session.ChannelMessageSendEmbed(client.message.ChannelID, embeddedMsg); err != nil {
+			log.Printf("error sending message | %v | %v", msg, err)
+		}
+		return
 	}
 	target = targetLanguageCode
 
