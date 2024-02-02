@@ -6,8 +6,9 @@ This Discord bot provides two unique functionalities: weather information and te
 
 To access weather information, use the following command:
 
-```bash
+```
 !weather help
+```
 
 This command will provide you with a list of available weather-related commands and options. You can retrieve weather data for specific locations and get details such as temperature, weather description, and humidity.
 
