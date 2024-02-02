@@ -2,6 +2,14 @@
 
 This Discord bot provides two unique functionalities: weather information and text translation. You can access these features by using the bot's prefix "!" followed by the respective command.
 
+The first command from which you can start from is the 
+
+```bash
+!help
+```
+
+It will show you all the available functionality of the bot.
+
 ## Weather Information
 
 To access weather information, use the following command:
